@@ -10,7 +10,8 @@ import {
   Settings,
   Bell,
   Activity,
-  Clock
+  Clock,
+  Tag
 } from 'lucide-react';
 
 export const navigationConfig = [
@@ -63,6 +64,14 @@ export const navigationConfig = [
     href: '/admin/conversations',
     icon: MessageSquare,
     description: 'Chat management'
+  },
+  {
+    id: 'coupons',
+    label: 'Coupons',
+    href: '/admin/coupons',
+    icon: Tag,
+    description: 'Manage discount coupons',
+    badge: 'new'
   },
   {
     id: 'analytics',

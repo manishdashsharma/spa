@@ -26,50 +26,8 @@ export default function BookingsAnalyticsPage() {
       }
     } catch (error) {
       console.error('Error fetching bookings analytics:', error);
-      // Fallback data
-      setAnalyticsData({
-        total_bookings: 1248,
-        completed_bookings: 1156,
-        cancelled_bookings: 92,
-        booking_completion_rate: 92.6,
-        avg_booking_value: 132.50,
-        popular_time_slots: [
-          { hour: '10:00', bookings: 145, percentage: 11.6 },
-          { hour: '14:00', bookings: 138, percentage: 11.1 },
-          { hour: '16:00', bookings: 132, percentage: 10.6 },
-          { hour: '18:00', bookings: 125, percentage: 10.0 },
-          { hour: '12:00', bookings: 118, percentage: 9.5 }
-        ],
-        booking_trends: [
-          { date: '2024-01-01', bookings: 42, revenue: 5544 },
-          { date: '2024-01-02', bookings: 38, revenue: 5016 },
-          { date: '2024-01-03', bookings: 45, revenue: 5940 },
-          { date: '2024-01-04', bookings: 52, revenue: 6864 },
-          { date: '2024-01-05', bookings: 48, revenue: 6336 },
-          { date: '2024-01-06', bookings: 55, revenue: 7260 },
-          { date: '2024-01-07', bookings: 51, revenue: 6732 }
-        ],
-        service_popularity: [
-          { service: 'Swedish Massage', bookings: 342, percentage: 27.4 },
-          { service: 'Deep Tissue Massage', bookings: 298, percentage: 23.9 },
-          { service: 'Hot Stone Massage', bookings: 186, percentage: 14.9 },
-          { service: 'Aromatherapy Massage', bookings: 156, percentage: 12.5 },
-          { service: 'Sports Massage', bookings: 142, percentage: 11.4 },
-          { service: 'Prenatal Massage', bookings: 124, percentage: 9.9 }
-        ],
-        geographical_distribution: [
-          { location: 'Downtown', bookings: 425, percentage: 34.1 },
-          { location: 'Westside', bookings: 312, percentage: 25.0 },
-          { location: 'Eastside', bookings: 286, percentage: 22.9 },
-          { location: 'Suburbs', bookings: 225, percentage: 18.0 }
-        ],
-        customer_segments: [
-          { segment: 'Regular Customers', bookings: 658, percentage: 52.7 },
-          { segment: 'New Customers', bookings: 342, percentage: 27.4 },
-          { segment: 'VIP Members', bookings: 156, percentage: 12.5 },
-          { segment: 'Corporate Clients', bookings: 92, percentage: 7.4 }
-        ]
-      });
+      console.log('Analytics API endpoint may not be available yet');
+      setAnalyticsData(null);
     } finally {
       setLoading(false);
     }
@@ -151,6 +109,24 @@ export default function BookingsAnalyticsPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+      </div>
+    );
+  }
+
+  if (!analyticsData) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Bookings Analytics</h1>
+          <p className="mt-2 text-gray-600">Detailed analysis of booking patterns and trends</p>
+        </div>
+        <div className="flex items-center justify-center h-64 bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="text-center">
+            <div className="text-gray-400 mb-4">📊</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Analytics Data Not Available</h3>
+            <p className="text-gray-500">The analytics API endpoint is not accessible at the moment.</p>
+          </div>
+        </div>
       </div>
     );
   }

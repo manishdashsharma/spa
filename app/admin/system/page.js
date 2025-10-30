@@ -38,49 +38,16 @@ export default function SystemHealthPage() {
 
   const fetchSystemHealth = async () => {
     try {
-      const { monitoringAPI } = await import('../../../lib/api');
-      const response = await monitoringAPI.systemHealth();
+      const { systemAPI } = await import('../../../lib/api');
+      const response = await systemAPI.health();
 
       if (response.data.success) {
         setSystemData(response.data.data);
       }
     } catch (error) {
       console.error('Error fetching system health:', error);
-      // Fallback data - matching API response structure
-      setSystemData({
-        system_status: 'healthy',
-        db_stats: {
-          total_users: 138,
-          total_bookings: 67,
-          total_conversations: 9,
-          total_messages: 67
-        },
-        activity_stats: {
-          registrations_24h: 1,
-          bookings_24h: 1,
-          messages_24h: 0,
-          revenue_24h: 0.0
-        },
-        health_indicators: [
-          {
-            type: 'performance',
-            metric: 'Avg Response Time',
-            value: '250ms',
-            status: 'good'
-          },
-          {
-            type: 'database',
-            metric: 'Database Performance',
-            value: 'good',
-            status: 'good'
-          }
-        ],
-        uptime: {
-          percentage: 99.9,
-          last_incident: null
-        },
-        last_updated: new Date().toISOString()
-      });
+      console.log('System Health API endpoint may not be available yet');
+      setSystemData(null);
     } finally {
       setLoading(false);
       setLastUpdated(new Date());
@@ -139,6 +106,24 @@ export default function SystemHealthPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+      </div>
+    );
+  }
+
+  if (!systemData) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">System Health</h1>
+          <p className="mt-2 text-gray-600">Monitor system performance and service status</p>
+        </div>
+        <div className="flex items-center justify-center h-64 bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="text-center">
+            <div className="text-gray-400 mb-4">🔧</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">System Health Data Not Available</h3>
+            <p className="text-gray-500">The system health API endpoint is not accessible at the moment.</p>
+          </div>
+        </div>
       </div>
     );
   }

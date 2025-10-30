@@ -26,85 +26,8 @@ export default function TherapistsAnalyticsPage() {
       }
     } catch (error) {
       console.error('Error fetching therapists analytics:', error);
-      // Fallback data
-      setAnalyticsData({
-        total_therapists: 34,
-        active_therapists: 28,
-        avg_rating: 4.7,
-        total_sessions: 1156,
-        total_revenue: 152840.00,
-        top_performers: [
-          {
-            id: 1,
-            name: 'Sarah Johnson',
-            avatar: 'SJ',
-            rating: 4.9,
-            sessions: 142,
-            revenue: 18760.00,
-            specialties: ['Swedish', 'Deep Tissue'],
-            availability: 95
-          },
-          {
-            id: 2,
-            name: 'Mike Thompson',
-            avatar: 'MT',
-            rating: 4.8,
-            sessions: 138,
-            revenue: 18216.00,
-            specialties: ['Sports', 'Rehabilitation'],
-            availability: 92
-          },
-          {
-            id: 3,
-            name: 'Emily Chen',
-            avatar: 'EC',
-            rating: 4.8,
-            sessions: 135,
-            revenue: 17820.00,
-            specialties: ['Prenatal', 'Aromatherapy'],
-            availability: 88
-          },
-          {
-            id: 4,
-            name: 'David Wilson',
-            avatar: 'DW',
-            rating: 4.7,
-            sessions: 128,
-            revenue: 16896.00,
-            specialties: ['Hot Stone', 'Swedish'],
-            availability: 90
-          }
-        ],
-        performance_trends: [
-          { month: 'Jan', sessions: 892, revenue: 117664 },
-          { month: 'Feb', sessions: 934, revenue: 123288 },
-          { month: 'Mar', sessions: 1015, revenue: 133980 },
-          { month: 'Apr', sessions: 1089, revenue: 143736 },
-          { month: 'May', sessions: 1156, revenue: 152840 }
-        ],
-        specialties_distribution: [
-          { specialty: 'Swedish Massage', therapists: 18, percentage: 52.9 },
-          { specialty: 'Deep Tissue', therapists: 15, percentage: 44.1 },
-          { specialty: 'Hot Stone', therapists: 12, percentage: 35.3 },
-          { specialty: 'Sports Massage', therapists: 10, percentage: 29.4 },
-          { specialty: 'Aromatherapy', therapists: 8, percentage: 23.5 },
-          { specialty: 'Prenatal', therapists: 6, percentage: 17.6 }
-        ],
-        availability_stats: {
-          avg_availability: 88.5,
-          fully_booked_days: 156,
-          peak_hours: ['14:00-16:00', '18:00-20:00'],
-          low_availability_periods: ['Friday Evening', 'Weekend Mornings']
-        },
-        customer_satisfaction: {
-          avg_rating: 4.7,
-          five_star_percentage: 68.2,
-          four_star_percentage: 24.1,
-          three_star_percentage: 6.3,
-          two_star_percentage: 1.2,
-          one_star_percentage: 0.2
-        }
-      });
+      console.log('Therapists Analytics API endpoint may not be available yet');
+      setAnalyticsData(null);
     } finally {
       setLoading(false);
     }
@@ -168,6 +91,24 @@ export default function TherapistsAnalyticsPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+      </div>
+    );
+  }
+
+  if (!analyticsData) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Therapists Analytics</h1>
+          <p className="mt-2 text-gray-600">Performance insights and therapist management analytics</p>
+        </div>
+        <div className="flex items-center justify-center h-64 bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="text-center">
+            <div className="text-gray-400 mb-4">👥</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Analytics Data Not Available</h3>
+            <p className="text-gray-500">The therapists analytics API endpoint is not accessible at the moment.</p>
+          </div>
+        </div>
       </div>
     );
   }

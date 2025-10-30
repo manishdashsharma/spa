@@ -18,47 +18,18 @@ export default function ConversationsPage() {
       const { conversationsAPI } = await import('../../../lib/api');
       const response = await conversationsAPI.getAll({
         page: 1,
-        per_page: 20
+        page_size: 20
       });
 
       if (response.data.success) {
         setConversations(response.data.data?.conversations || []);
+      } else {
+        console.error('Conversations API Error:', response.data.message);
+        setConversations([]);
       }
     } catch (error) {
       console.error('Error fetching conversations:', error);
-      // Fallback data
-      setConversations([
-        {
-          id: '123e4567-e89b-12d3-a456-426614174000',
-          customer: { name: 'John Doe', email: 'john@example.com' },
-          therapist: { name: 'Jane Smith', email: 'jane@example.com' },
-          last_message: 'Thank you for the great session!',
-          last_message_time: '2024-01-15 16:30:00',
-          message_count: 8,
-          unread_count: 2,
-          status: 'active'
-        },
-        {
-          id: '123e4567-e89b-12d3-a456-426614174001',
-          customer: { name: 'Sarah Wilson', email: 'sarah@example.com' },
-          therapist: { name: 'Mike Johnson', email: 'mike@example.com' },
-          last_message: 'What time should I arrive tomorrow?',
-          last_message_time: '2024-01-15 14:20:00',
-          message_count: 5,
-          unread_count: 1,
-          status: 'active'
-        },
-        {
-          id: '123e4567-e89b-12d3-a456-426614174002',
-          customer: { name: 'Emily Brown', email: 'emily@example.com' },
-          therapist: { name: 'Alex Thompson', email: 'alex@example.com' },
-          last_message: 'Perfect, see you next week!',
-          last_message_time: '2024-01-14 18:45:00',
-          message_count: 12,
-          unread_count: 0,
-          status: 'closed'
-        }
-      ]);
+      setConversations([]);
     } finally {
       setLoading(false);
     }
@@ -123,9 +94,18 @@ export default function ConversationsPage() {
       </div>
 
       {/* Conversations List */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div className="divide-y divide-gray-200">
-          {filteredConversations.map((conversation) => (
+      {filteredConversations.length === 0 ? (
+        <div className="flex items-center justify-center h-64 bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="text-center">
+            <div className="text-gray-400 mb-4">💬</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No Conversations Found</h3>
+            <p className="text-gray-500">No conversations are available at the moment.</p>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+          <div className="divide-y divide-gray-200">
+            {filteredConversations.map((conversation) => (
             <motion.div
               key={conversation.id}
               initial={{ opacity: 0 }}
@@ -187,57 +167,66 @@ export default function ConversationsPage() {
                 </div>
               </div>
             </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center">
-            <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center">
-              <MessageSquare className="h-6 w-6 text-blue-600" />
+      {conversations.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center">
+              <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <MessageSquare className="h-6 w-6 text-blue-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Total Conversations</p>
+                <p className="text-2xl font-bold text-gray-900">{conversations.length}</p>
+              </div>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Conversations</p>
-              <p className="text-2xl font-bold text-gray-900">89</p>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center">
+              <div className="h-12 w-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <MessageSquare className="h-6 w-6 text-green-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Active Conversations</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {conversations.filter(c => c.status === 'active').length}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center">
+              <div className="h-12 w-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <MessageSquare className="h-6 w-6 text-purple-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Unread Messages</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {conversations.reduce((total, c) => total + (c.unread_count || 0), 0)}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center">
+              <div className="h-12 w-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                <Send className="h-6 w-6 text-orange-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Total Messages</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {conversations.reduce((total, c) => total + (c.message_count || 0), 0)}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center">
-            <div className="h-12 w-12 bg-green-100 rounded-lg flex items-center justify-center">
-              <MessageSquare className="h-6 w-6 text-green-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Active Conversations</p>
-              <p className="text-2xl font-bold text-gray-900">23</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center">
-            <div className="h-12 w-12 bg-purple-100 rounded-lg flex items-center justify-center">
-              <MessageSquare className="h-6 w-6 text-purple-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Unread Messages</p>
-              <p className="text-2xl font-bold text-gray-900">12</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center">
-            <div className="h-12 w-12 bg-orange-100 rounded-lg flex items-center justify-center">
-              <Send className="h-6 w-6 text-orange-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Avg Response Time</p>
-              <p className="text-2xl font-bold text-gray-900">2.5h</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

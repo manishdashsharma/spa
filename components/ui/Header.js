@@ -35,10 +35,10 @@ export default function Header({ onMenuClick, pathname }) {
           </div>
 
           {/* Notifications */}
-          <button className="p-2 text-gray-400 hover:text-gray-500 relative rounded-lg hover:bg-gray-50 transition-colors">
+          {/* <button className="p-2 text-gray-400 hover:text-gray-500 relative rounded-lg hover:bg-gray-50 transition-colors">
             <Bell className="h-6 w-6" />
             <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-400"></span>
-          </button>
+          </button> */}
 
           {/* Mobile search button */}
           <button className="md:hidden p-2 text-gray-400 hover:text-gray-500 rounded-lg hover:bg-gray-50 transition-colors">

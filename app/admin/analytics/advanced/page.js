@@ -44,83 +44,8 @@ export default function AdvancedAnalyticsPage() {
       }
     } catch (error) {
       console.error('Error fetching advanced analytics:', error);
-      // Fallback data
-      setAnalyticsData({
-        kpis: {
-          customer_lifetime_value: 1845.32,
-          customer_acquisition_cost: 68.50,
-          churn_rate: 8.2,
-          revenue_per_customer: 285.75,
-          booking_conversion_rate: 68.4,
-          repeat_customer_rate: 72.6
-        },
-        cohort_analysis: [
-          { month: 'Jan', new_customers: 245, retained_month_1: 198, retained_month_3: 156, retained_month_6: 132 },
-          { month: 'Feb', new_customers: 268, retained_month_1: 220, retained_month_3: 175, retained_month_6: 148 },
-          { month: 'Mar', new_customers: 289, retained_month_1: 238, retained_month_3: 192, retained_month_6: 165 },
-          { month: 'Apr', new_customers: 312, retained_month_1: 265, retained_month_3: 215, retained_month_6: null },
-          { month: 'May', new_customers: 334, retained_month_1: 287, retained_month_3: null, retained_month_6: null }
-        ],
-        geographic_heatmap: [
-          { region: 'Downtown', bookings: 425, revenue: 56125, avg_rating: 4.8 },
-          { region: 'Westside', bookings: 312, revenue: 41184, avg_rating: 4.7 },
-          { region: 'Eastside', bookings: 286, revenue: 37752, avg_rating: 4.6 },
-          { region: 'North Hills', bookings: 198, revenue: 26136, avg_rating: 4.9 },
-          { region: 'South Bay', bookings: 164, revenue: 21648, avg_rating: 4.5 }
-        ],
-        seasonal_patterns: {
-          peak_seasons: ['Summer', 'Holiday Season'],
-          low_seasons: ['Post-Holiday', 'Early Spring'],
-          weekly_patterns: [
-            { day: 'Monday', bookings: 145, avg_value: 128 },
-            { day: 'Tuesday', bookings: 132, avg_value: 125 },
-            { day: 'Wednesday', bookings: 156, avg_value: 135 },
-            { day: 'Thursday', bookings: 168, avg_value: 142 },
-            { day: 'Friday', bookings: 198, avg_value: 155 },
-            { day: 'Saturday', bookings: 234, avg_value: 168 },
-            { day: 'Sunday', bookings: 186, avg_value: 145 }
-          ]
-        },
-        predictive_insights: {
-          next_month_revenue_forecast: 185420,
-          customer_growth_projection: 15.8,
-          demand_forecast: [
-            { service: 'Swedish Massage', projected_demand: '+12%' },
-            { service: 'Deep Tissue', projected_demand: '+8%' },
-            { service: 'Hot Stone', projected_demand: '+5%' },
-            { service: 'Sports Massage', projected_demand: '+18%' }
-          ]
-        },
-        correlation_matrix: {
-          rating_vs_bookings: 0.78,
-          price_vs_demand: -0.45,
-          weather_vs_bookings: 0.32,
-          marketing_spend_vs_acquisition: 0.65
-        },
-        advanced_segments: [
-          {
-            name: 'VIP Customers',
-            size: 156,
-            characteristics: ['High spending', 'Frequent bookings', 'Premium services'],
-            avg_value: 485.20,
-            retention_rate: 94.2
-          },
-          {
-            name: 'Price-Sensitive',
-            size: 342,
-            characteristics: ['Deal seekers', 'Basic services', 'Occasional bookings'],
-            avg_value: 98.50,
-            retention_rate: 58.7
-          },
-          {
-            name: 'Wellness Enthusiasts',
-            size: 198,
-            characteristics: ['Regular bookings', 'Varied services', 'Health-focused'],
-            avg_value: 225.80,
-            retention_rate: 82.4
-          }
-        ]
-      });
+      console.log('Advanced Analytics API endpoint may not be available yet');
+      setAnalyticsData(null);
     } finally {
       setLoading(false);
     }
@@ -200,6 +125,24 @@ export default function AdvancedAnalyticsPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+      </div>
+    );
+  }
+
+  if (!analyticsData) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Advanced Analytics</h1>
+          <p className="mt-2 text-gray-600">Deep insights and predictive analytics for strategic decisions</p>
+        </div>
+        <div className="flex items-center justify-center h-64 bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="text-center">
+            <div className="text-gray-400 mb-4">📈</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Analytics Data Not Available</h3>
+            <p className="text-gray-500">The advanced analytics API endpoint is not accessible at the moment.</p>
+          </div>
+        </div>
       </div>
     );
   }
