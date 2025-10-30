@@ -58,13 +58,13 @@ export const navigationConfig = [
     icon: Clock,
     description: 'Pending booking requests'
   },
-  {
-    id: 'conversations',
-    label: 'Conversations',
-    href: '/admin/conversations',
-    icon: MessageSquare,
-    description: 'Chat management'
-  },
+  // {
+  //   id: 'conversations',
+  //   label: 'Conversations',
+  //   href: '/admin/conversations',
+  //   icon: MessageSquare,
+  //   description: 'Chat management'
+  // },
   {
     id: 'coupons',
     label: 'Coupons',
